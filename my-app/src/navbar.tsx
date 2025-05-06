@@ -1,29 +1,34 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import { BiUser } from "react-icons/bi";
-import { IoIosSearch } from "react-icons/io";
-import { IoCart } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 import slidebar from "@/app/home.json";
 import { LuLeaf } from "react-icons/lu";
 import { CiLocationOn } from "react-icons/ci";
 import { MdOutlineLocalShipping } from "react-icons/md";
 import { GrResources } from "react-icons/gr";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../src/store';
 import { fetchProduct } from '../src/store/app/Product';
-import { useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation';
+
+// ✅ Product type
+interface ProductType {
+  _id: string;
+  image: string;
+  description: string;
+  price: number;
+}
+
+// ✅ Slide type from home.json
 
 
 function Navbar() {
   const router = useRouter();
   const [current, setCurrent] = useState(0);
-  const [slides, setSlides] = useState(slidebar.slides);
-  const dispatch = useDispatch<AppDispatch>()
-  const [product, setproduct] = useState<any>([])
-  const ProductDatalist = useSelector((state: RootState) => state.product.ProductData as any)
-
+  const [slides] = useState(slidebar.slides);
+  const dispatch = useDispatch<AppDispatch>();
+  const [product, setProduct] = useState<ProductType[]>([]);
+  const productDataList = useSelector((state: RootState) => state.product.ProductData) as ProductType[];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -34,20 +39,15 @@ function Navbar() {
 
   const { image, heading, subheading, button, align } = slides[current];
 
-
+  useEffect(() => {
+    dispatch(fetchProduct());
+  }, [dispatch]);
 
   useEffect(() => {
-
-    dispatch(fetchProduct())
-
-  }, [])
-
-  useEffect(() => {
-    if (ProductDatalist) {
-      setproduct(ProductDatalist)
+    if (productDataList) {
+      setProduct(productDataList);
     }
-  }, [ProductDatalist])
-
+  }, [productDataList]);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
@@ -72,16 +72,12 @@ function Navbar() {
     },
   ];
 
-const handleproduct = () => {
-  router.push('/product')
-}
-
+  const handleProductClick = () => {
+    router.push('/product');
+  };
 
   return (
     <div>
-      {/* Sticky Top Banner */}
-
-    
       {/* Hero Banner */}
       <div
         className="w-full h-[400px] sm:h-[500px] md:h-[600px] bg-center bg-cover flex items-center transition-all duration-1000 px-4 sm:px-16"
@@ -112,7 +108,7 @@ const handleproduct = () => {
         </div>
       </div>
 
-      {/* Icons Grid Section */}
+      {/* Icons Grid */}
       <div className="bg-[#F3EFE8FF] py-14">
         <div className="mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <Feature icon={<LuLeaf className="text-5xl" />} title="NATURE BOTTLED" text="Botanical artisan perfumery. Natural essential oils, no synthetic aroma-chemicals." />
@@ -123,32 +119,29 @@ const handleproduct = () => {
       </div>
 
       {/* Banner Image */}
-      <div>
-        <img
-          src={slidebar.banner2[0].image}
-          className="w-full h-[300px] sm:h-[500px] object-cover"
-          alt="Banner"
-        />
-      </div>
+      <img
+        src={slidebar.banner2[0].image}
+        className="w-full h-[300px] sm:h-[500px] object-cover"
+        alt="Banner"
+      />
 
-      {/* Gift Sets Heading */}
+      {/* Best Sellers */}
       <div className="bg-[#F3EFE8FF] py-6 text-center text-xl sm:text-3xl font-bold">
         <p>Best-sellers Gift sets</p>
       </div>
 
-      {/* Repeat Features Section */}
       <div className="bg-[#F3EFE8FF] py-12">
         <div className="mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {product.slice(0, 4).map((product: any) => (
-            <div key={product._id} onClick={handleproduct} className=" cursor-pointer">
+          {product.slice(0, 4).map((productItem) => (
+            <div key={productItem._id} onClick={handleProductClick} className="cursor-pointer">
               <div className="mb-4 justify-items-center">
-                <img src={product.image} alt={product.description} />
+                <img src={productItem.image} alt={productItem.description} />
               </div>
               <h4 className="font-semibold text-md tracking-widest mb-2">
-                {product.description}
+                {productItem.description}
               </h4>
               <p className="text-[#242424] font-medium text-sm">
-                ${' '}{product.price}{' '}AUD
+                ${productItem.price} AUD
               </p>
             </div>
           ))}
@@ -158,18 +151,12 @@ const handleproduct = () => {
         </div>
       </div>
 
-
-
-      <div>
-        <img
-          src='https://essensorie.com/cdn/shop/files/Screenshot_2024-05-07_at_4.06.39_pm_7c655974-348d-48af-bb88-45756c256b32.png?v=1715236835&width=2000'
-          className="w-full h-[300px] sm:h-[700px] object-cover"
-          alt="Banner"
-        />
-      </div>
-
-
-
+      {/* Collections */}
+      <img
+        src="https://essensorie.com/cdn/shop/files/Screenshot_2024-05-07_at_4.06.39_pm_7c655974-348d-48af-bb88-45756c256b32.png?v=1715236835&width=2000"
+        className="w-full h-[300px] sm:h-[700px] object-cover"
+        alt="Banner"
+      />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4 sm:p-6 md:p-10 bg-[#f5f3ef]">
         {collections.map(({ title, label, image }, index) => (
@@ -198,45 +185,43 @@ const handleproduct = () => {
         ))}
       </div>
 
-      <div>
-        <img
-          src='https://essensorie.com/cdn/shop/files/Essensorie_customers.jpg?v=1719023604&width=1200'
-          className="w-full h-[300px] sm:h-[700px] object-cover"
-          alt="Banner"
-        />
-      </div>
+      {/* Customer Image */}
+      <img
+        src="https://essensorie.com/cdn/shop/files/Essensorie_customers.jpg?v=1719023604&width=1200"
+        className="w-full h-[300px] sm:h-[700px] object-cover"
+        alt="Banner"
+      />
 
+      {/* More Products */}
       <div className="bg-[#F3EFE8FF] py-12">
         <div className="mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {product.slice(4, 8).map((product: any) => (
-            <div key={product._id}>
+          {product.slice(4, 8).map((productItem) => (
+            <div key={productItem._id}>
               <div className="mb-4 justify-items-center">
-                <img src={product.image} alt={product.description} />
+                <img src={productItem.image} alt={productItem.description} />
               </div>
               <h4 className="font-semibold text-md tracking-widest mb-2">
-                {product.description}
+                {productItem.description}
               </h4>
               <p className="text-[#242424] font-medium text-sm">
-                ${' '}{product.price}{' '}AUD
+                ${productItem.price} AUD
               </p>
             </div>
           ))}
         </div>
       </div>
 
-      <div>
-        <img
-          src='https://essensorie.com/cdn/shop/files/DSC04809_c95d454d-0ba4-4233-bca2-be65b4023eb5.jpg?v=1715236776&width=2000'
-          className="w-full h-[300px] sm:h-[700px] object-cover"
-          alt="Banner"
-        />
-      </div>
+      <img
+        src="https://essensorie.com/cdn/shop/files/DSC04809_c95d454d-0ba4-4233-bca2-be65b4023eb5.jpg?v=1715236776&width=2000"
+        className="w-full h-[300px] sm:h-[700px] object-cover"
+        alt="Banner"
+      />
     </div>
   );
 }
 
 // ✅ Feature Card Component
-const Feature = ({ icon, title, text }: { icon: React.ReactNode, title: string, text: string }) => (
+const Feature = ({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) => (
   <div>
     <div className="mb-4 justify-items-center">{icon}</div>
     <h4 className="font-semibold text-md tracking-widest mb-2">{title}</h4>
