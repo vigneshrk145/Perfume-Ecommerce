@@ -1,0 +1,47 @@
+{
+    "slides": [
+      {
+        "image": "https://essensorie.com/cdn/shop/files/DSC03374-11.jpg?v=1721018468&width=2000",
+        "heading": "CEDAR SANDALWOOD",
+        "subheading": "CALLING ALL WOOD LOVERS",
+        "button": "SHOP NEW PRODUCTS",
+        "align": "left"
+      },
+      {
+        "image": "https://essensorie.com/cdn/shop/files/Shipping_Desktop.jpg?v=1729914598&width=2000",
+        "heading": "FREE SHIPPING",
+        "subheading": "DELIVERED TO YOUR DOORSTEP",
+        "button": "START SHOPPING",
+        "align": "right"
+      },
+      {
+        "image": "https://essensorie.com/cdn/shop/files/Diffusing.jpg?v=1646108374&width=2000",
+        "heading": "DIFFUSER COLLECTION",
+        "subheading": "BRING CALM TO YOUR SPACE",
+        "button": "EXPLORE DIFFUSERS",
+        "align": "left"
+      },
+      {
+        "image": "https://essensorie.com/cdn/shop/files/Hand_Cream_Desktop.jpg?v=1729914020&width=2000",
+        "heading": "HAND CREAM",
+        "subheading": "SMOOTH & SOFT HANDS",
+        "button": "VIEW HAND CARE",
+        "align": "right"
+      },
+      {
+        "image": "https://essensorie.com/cdn/shop/files/Cedar_Sandalwood_Desktop.jpg?v=1729915057&width=2000",
+        "heading": "NATURAL SCENTS",
+        "subheading": "BRING NATURE INDOORS",
+        "button": "BROWSE COLLECTION",
+        "align": "left"
+      }
+    ],
+
+   "banner2":[
+    {
+        "image": "https://essensorie.com/cdn/shop/files/IMG_2027_3.jpg?v=1614289822&width=2000"
+       
+      }
+   ]
+  }
+  
