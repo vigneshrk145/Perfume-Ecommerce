@@ -23,7 +23,8 @@ export const fetchProduct = createAsyncThunk<Product[]>(
   'product/fetchProduct',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get<Product[]>('http://localhost:5000/products/getproducts');
+      // const response = await axios.get<Product[]>('http://localhost:5000/products/getproducts');
+      const response = await axios.get<Product[]>('https://perfume-ecommerce-backend.vercel.app/products/getproducts');
       return response.data;
     } catch (error) {
       console.log(error);
