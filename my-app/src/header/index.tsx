@@ -6,7 +6,7 @@ import { IoCart } from 'react-icons/io5'
 import { useRouter } from 'next/navigation';
 
 function Header() {
-     const { openCart ,closeCart } = useCart()
+     const { openCart} = useCart()
 const router = useRouter();
      const openlogin = () => {
         router.push('/login')
